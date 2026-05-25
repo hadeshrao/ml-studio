@@ -1,0 +1,7 @@
+{# Rendered from ML Studio at export time #}
+{% for step in steps %}
+{{ step.name }}:
+  {% for k, v in step.params.items() %}
+  {{ k }}: {{ v }}
+  {% endfor %}
+{% endfor %}

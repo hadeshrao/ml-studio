@@ -1,0 +1,20 @@
+{# Rendered from ML Studio at export time #}
+"""Auto-generated Kedro pipeline from ML Studio."""
+from kedro.pipeline import Pipeline, node, pipeline
+
+from .nodes import {% for step in steps %}{{ step.name }}{% if not loop.last %}, {% endif %}{% endfor %}
+
+
+def create_pipeline(**kwargs) -> Pipeline:
+    return pipeline(
+        [
+            {% for step in steps %}
+            node(
+                func={{ step.name }},
+                inputs={{ step.input_columns | tojson }},
+                outputs={{ step.output_columns | tojson }},
+                name="{{ step.name }}_node",
+            ),
+            {% endfor %}
+        ]
+    )

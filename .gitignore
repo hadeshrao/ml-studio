@@ -6,7 +6,17 @@ env/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+*.pyo
 
 # IDE / Editor files
 .vscode/
 .DS_Store
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Exports
+exports/
+
+# Environment variables
+.env

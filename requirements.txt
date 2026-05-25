@@ -1,0 +1,12 @@
+streamlit
+pandas
+numpy
+scikit-learn
+plotly
+scipy
+jinja2
+anthropic
+optuna
+xgboost
+lightgbm
+pyyaml

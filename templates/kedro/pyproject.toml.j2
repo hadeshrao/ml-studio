@@ -1,0 +1,19 @@
+{# Rendered from ML Studio at export time #}
+[tool.kedro]
+package_name = "ml_studio_pipeline"
+project_name = "ML Studio Pipeline"
+kedro_init_version = "0.19.0"
+
+[project]
+name = "ml_studio_pipeline"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "kedro>=0.19.0",
+    "scikit-learn",
+    "pandas",
+    "numpy",
+    {% for dep in extra_dependencies %}
+    "{{ dep }}",
+    {% endfor %}
+]

@@ -1,0 +1,13 @@
+{# Rendered from ML Studio at export time #}
+"""Auto-generated Kedro nodes from ML Studio pipeline."""
+import pandas as pd
+
+
+{% for step in steps %}
+def {{ step.name }}(df: pd.DataFrame{% for k, v in step.params.items() %}, {{ k }}={{ v | tojson }}{% endfor %}) -> pd.DataFrame:
+    """{{ step.description }}"""
+    # TODO: implement {{ step.name }}
+    raise NotImplementedError("{{ step.name }} not yet implemented")
+
+
+{% endfor %}
