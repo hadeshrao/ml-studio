@@ -1,13 +1,40 @@
-{# Rendered from ML Studio at export time #}
-"""Auto-generated Kedro nodes from ML Studio pipeline."""
+{# Rendered from ML Studio at export time — {{ generated_at }} #}
+"""Auto-generated model training node for the ML Studio pipeline."""
+from __future__ import annotations
+
 import pandas as pd
+{{ model_import }}
 
 
-{% for step in steps %}
-def {{ step.name }}(df: pd.DataFrame{% for k, v in step.params.items() %}, {{ k }}={{ v | tojson }}{% endfor %}) -> pd.DataFrame:
-    """{{ step.description }}"""
-    # TODO: implement {{ step.name }}
-    raise NotImplementedError("{{ step.name }} not yet implemented")
+def train_model(df: pd.DataFrame) -> object:
+    """Train {{ algorithm_label }} and return the fitted estimator.
 
+    Hyperparameters were recorded from the ML Studio training session.
+    To retune, edit conf/base/parameters.yml and re-run `kedro run`.
+    """
+    feature_cols: list[str] = {{ features | tojson }}
+    available = [c for c in feature_cols if c in df.columns]
+    X = df[available].copy()
 
-{% endfor %}
+    {% if target %}
+    y = df["{{ target }}"].copy()
+    mask = X.notna().all(axis=1) & y.notna()
+    X, y = X[mask], y[mask]
+    {% else %}
+    X = X.dropna()
+    {% endif %}
+
+    model = {{ model_class }}(
+        {% for k, v in hyperparams.items() %}
+        {{ k }}={{ v | tojson }},
+        {% endfor %}
+    )
+
+    {% if target %}
+    model.fit(X, y)
+    {% else %}
+    # Unsupervised — no target column
+    model.fit(X)
+    {% endif %}
+
+    return model

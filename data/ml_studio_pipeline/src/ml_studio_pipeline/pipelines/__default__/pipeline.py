@@ -1,4 +1,4 @@
-{# Rendered from ML Studio at export time — {{ generated_at }} #}
+
 """Auto-generated Kedro pipeline from ML Studio.
 
 Each preprocessing / feature-engineering step is wired as a Kedro node with
@@ -11,26 +11,17 @@ from functools import partial
 
 from kedro.pipeline import Pipeline, node, pipeline
 
-{% for fn_name, stage_module in fn_imports.items() %}
-from ..{{ stage_module }} import {{ fn_name }}
-{% endfor %}
+
 from .nodes import train_model
 
 
 def create_pipeline(**kwargs) -> Pipeline:
     return pipeline(
         [
-            {% for s in steps_with_io %}
-            node(
-                func=partial({{ s.name }}, **{{ s.params | tojson }}),
-                inputs="{{ s.input_dataset }}",
-                outputs="{{ s.output_dataset }}",
-                name="{{ s.node_name }}",
-            ),
-            {% endfor %}
+            
             node(
                 func=train_model,
-                inputs="{{ last_dataset }}",
+                inputs="raw_data",
                 outputs="model",
                 name="train_model",
             ),

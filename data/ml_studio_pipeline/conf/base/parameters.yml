@@ -1,0 +1,47 @@
+
+# Model hyperparameters — edit here to retune without changing pipeline code.
+
+model:
+  algorithm: "random_forest"
+  
+  random_state: 42
+  
+  n_estimators: 100
+  
+  max_depth: null
+  
+  min_samples_split: 2
+  
+  max_features: "sqrt"
+  
+
+dataset:
+  target_column: "median_house_value"
+  feature_columns: ["longitude", "latitude", "housing_median_age", "total_rooms", "total_bedrooms", "population", "households", "median_income"]
+  task_type: "regression"
+
+# Metrics from the ML Studio training session (informational only).
+metrics:
+  
+  r2: 0.804304813131358
+  
+  rmse: 51731.683322585406
+  
+  mae: 34739.20326156105
+  
+  mape: 19.654303622565067
+  
+  algorithm: "random_forest"
+  
+  task_type: "regression"
+  
+  n_train: 16346
+  
+  n_test: 4087
+  
+  cv_scoring: "r2"
+  
+  cv_mean: 0.8003775739774192
+  
+  cv_std: 0.00792664190909979
+  

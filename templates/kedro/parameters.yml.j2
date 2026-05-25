@@ -1,7 +1,19 @@
-{# Rendered from ML Studio at export time #}
-{% for step in steps %}
-{{ step.name }}:
-  {% for k, v in step.params.items() %}
-  {{ k }}: {{ v }}
+{# Rendered from ML Studio at export time — {{ generated_at }} #}
+# Model hyperparameters — edit here to retune without changing pipeline code.
+
+model:
+  algorithm: "{{ algorithm }}"
+  {% for k, v in hyperparams.items() %}
+  {{ k }}: {{ v | tojson }}
   {% endfor %}
-{% endfor %}
+
+dataset:
+  target_column: "{{ target }}"
+  feature_columns: {{ features | tojson }}
+  task_type: "{{ task_type }}"
+
+# Metrics from the ML Studio training session (informational only).
+metrics:
+  {% for k, v in metrics.items() %}
+  {{ k }}: {{ v | tojson }}
+  {% endfor %}

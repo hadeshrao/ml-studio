@@ -1,12 +1,15 @@
-{# Rendered from ML Studio at export time #}
+{# Rendered from ML Studio at export time — {{ generated_at }} #}
+
 raw_data:
   type: pandas.CSVDataset
   filepath: data/01_raw/input.csv
 
-processed_data:
+{% for dataset in intermediate_datasets %}
+{{ dataset }}:
   type: pandas.CSVDataset
-  filepath: data/02_intermediate/processed.csv
+  filepath: data/02_intermediate/{{ dataset }}.csv
 
-model_output:
+{% endfor %}
+model:
   type: pickle.PickleDataset
   filepath: data/06_models/model.pkl
